@@ -25,6 +25,7 @@ my %WriteMakefileArgs = (
     "Function::Parameters" => 0,
     "HTTP::Request::Common" => 0,
     "Moo" => 0,
+    "Moose" => 0,
     "Time::HiRes" => 0,
     "WebService::Client" => "0.0204"
   },
@@ -36,7 +37,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.0100",
+  "VERSION" => "0.0101",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -52,6 +53,7 @@ my %FallbackPrereqs = (
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
   "Moo" => 0,
+  "Moose" => 0,
   "Test::More" => 0,
   "Time::HiRes" => 0,
   "WebService::Client" => "0.0204",
