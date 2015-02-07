@@ -48,6 +48,8 @@ method modify_account($id, HashRef $data) {
     return $self->put("/accounts/$id", { account => $data });
 }
 
+method get_balance { $self->get('/account/balance') }
+
 method get_account_balance($id) { $self->get("/accounts/$id/balance") }
 
 method get_account_address($id) { $self->get("/accounts/$id/address") }
@@ -64,7 +66,37 @@ method delete_account($id) { $self->delete("/accounts/$id") }
 
 method get_addresses { $self->get("/addresses") }
 
+method get_address($id) { $self->get("/addresses/$id") }
+
 method get_contacts { $self->get('/contacts') }
+
+method get_transactions { $self->get('/transactions') }
+
+method get_transaction($id) { $self->get("/transactions/$id") }
+
+method send_money($data) {
+    return $self->post('/transactions/send_money', { transaction => $data });
+}
+
+method transfer_money($data) {
+    return $self->post('/transactions/transfer_money',{ transaction => $data });
+}
+
+method request_money($data) {
+    return $self->post('/transactions/request_money', { transaction => $data });
+}
+
+method resend_request($id) {
+    return $self->put("/transactions/$id/resend_request");
+}
+
+method complete_request($id) {
+    return $self->put("/transactions/$id/complete_request");
+}
+
+method cancel_request($id) {
+    return $self->put("/transactions/$id/cancel_request");
+}
 
 # ABSTRACT: Coinbase (http://coinbase.com) API bindings
 
@@ -154,6 +186,83 @@ Example:
 
 Deletes an account.
 Only non-primary accounts with zero balance can be deleted.
+
+=head2 get_addresses
+
+    get_addresses()
+
+Returns the bitcoin addresses a user has associated with their account.
+
+=head2 get_address
+
+    get_address($id_or_address)
+
+Returns the bitcoin address object for the given id or address.
+
+=head2 get_contacts
+
+    get_contacts()
+
+Returns contacts the user has previously sent to or received from.
+
+=head2 get_transactions
+
+    get_transactions()
+
+Returns the user's transactions sorted by created_at in descending order.
+
+=head2 get_transaction
+
+    get_transaction($transaction_id)
+
+Returns the transaction for the given id.
+
+=head2 send_money
+
+    send_money($data)
+
+Send money to an email or bitcoin address.
+
+Example:
+
+    $coin->send_money({
+        to       => $email_or_bitcoin_address,
+        amount   => '1.23',
+        notes    => 'Here is your money',
+    });
+
+=head2 transfer_money
+
+    transfer_money($data)
+
+Transfer bitcoin between accounts.
+
+=head2 request_money
+
+    request_money($data)
+
+Request money from an email.
+
+=head2 resend_request
+
+    resend_request($transaction_id)
+
+Resend a money request.
+
+=head2 complete_request
+
+    complete_request($transaction_id)
+
+Lets the recipient of a money request complete the request by sending money to
+the user who requested the money.
+This can only be completed by the user to whom the request was made,
+not the user who sent the request.
+
+=head2 cancel_request
+
+    cancel_request($transaction_id)
+
+Cancel a money request.
 
 =cut
 

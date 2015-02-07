@@ -4,7 +4,7 @@ WebService::Coinbase - Coinbase (http://coinbase.com) API bindings
 
 # VERSION
 
-version 0.0001
+version 0.0100
 
 # SYNOPSIS
 
@@ -92,6 +92,83 @@ Example:
 
 Deletes an account.
 Only non-primary accounts with zero balance can be deleted.
+
+## get\_addresses
+
+    get_addresses()
+
+Returns the bitcoin addresses a user has associated with their account.
+
+## get\_address
+
+    get_address($id_or_address)
+
+Returns the bitcoin address object for the given id or address.
+
+## get\_contacts
+
+    get_contacts()
+
+Returns contacts the user has previously sent to or received from.
+
+## get\_transactions
+
+    get_transactions()
+
+Returns the user's transactions sorted by created\_at in descending order.
+
+## get\_transaction
+
+    get_transaction($transaction_id)
+
+Returns the transaction for the given id.
+
+## send\_money
+
+    send_money($data)
+
+Send money to an email or bitcoin address.
+
+Example:
+
+    $coin->send_money({
+        to       => $email_or_bitcoin_address,
+        amount   => '1.23',
+        notes    => 'Here is your money',
+    });
+
+## transfer\_money
+
+    transfer_money($data)
+
+Transfer bitcoin between accounts.
+
+## request\_money
+
+    request_money($data)
+
+Request money from an email.
+
+## resend\_request
+
+    resend_request($transaction_id)
+
+Resend a money request.
+
+## complete\_request
+
+    complete_request($transaction_id)
+
+Lets the recipient of a money request complete the request by sending money to
+the user who requested the money.
+This can only be completed by the user to whom the request was made,
+not the user who sent the request.
+
+## cancel\_request
+
+    cancel_request($transaction_id)
+
+Cancel a money request.
 
 # AUTHOR
 
