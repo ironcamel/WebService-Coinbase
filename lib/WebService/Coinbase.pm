@@ -1,5 +1,5 @@
 package WebService::Coinbase;
-use Moo;
+use Moose;
 with 'WebService::Client';
 
 use Crypt::Mac::HMAC qw(hmac hmac_hex);
@@ -98,9 +98,23 @@ method cancel_request($id) {
     return $self->put("/transactions/$id/cancel_request");
 }
 
+method get_buy_price(Maybe[HashRef] :$query) {
+    return $self->get("/prices/buy", $query);
+}
+
+method get_sell_price(Maybe[HashRef] :$query) {
+    return $self->get("/prices/sell", $query);
+}
+
+method get_spot_price(Maybe[HashRef] :$query) {
+    return $self->get("/prices/spot_rate", $query);
+}
+
 # ABSTRACT: Coinbase (http://coinbase.com) API bindings
 
 =head1 SYNOPSIS
+
+    use WebService::Coinbase;
 
     my $coin = WebService::Coinbase->new(
         api_key    => 'API_KEY',
@@ -145,11 +159,17 @@ Example:
 
     my $account = $coin->create_account({ name => "Bling Bling" });
 
+=head2 get_balance
+
+    get_balance()
+
+Returns the user's current balance.
+
 =head2 get_account_balance
 
     get_account_balance($account_id)
 
-Returns the user's current account balance in BTC.
+Returns the current balance for the given account.
 
 =head2 get_account_address
 
@@ -263,6 +283,21 @@ not the user who sent the request.
     cancel_request($transaction_id)
 
 Cancel a money request.
+
+=head2 get_buy_price
+
+    get_buy_price()
+    get_buy_price(query => { qty => 1 })
+
+=head2 get_sell_price
+
+    get_sell_price()
+    get_sell_price(query => { qty => 1 })
+
+=head2 get_spot_price
+
+    get_spot_price()
+    get_spot_price(query => { currency  => 'CAD' })
 
 =cut
 

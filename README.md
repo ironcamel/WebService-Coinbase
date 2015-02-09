@@ -8,6 +8,8 @@ version 0.0101
 
 # SYNOPSIS
 
+    use WebService::Coinbase;
+
     my $coin = WebService::Coinbase->new(
         api_key    => 'API_KEY',
         api_secret => 'API_SECRET',
@@ -51,11 +53,17 @@ Example:
 
     my $account = $coin->create_account({ name => "Bling Bling" });
 
+## get\_balance
+
+    get_balance()
+
+Returns the user's current balance.
+
 ## get\_account\_balance
 
     get_account_balance($account_id)
 
-Returns the user's current account balance in BTC.
+Returns the current balance for the given account.
 
 ## get\_account\_address
 
@@ -169,6 +177,21 @@ not the user who sent the request.
     cancel_request($transaction_id)
 
 Cancel a money request.
+
+## get\_buy\_price
+
+    get_buy_price()
+    get_buy_price(query => { qty => 1 })
+
+## get\_sell\_price
+
+    get_sell_price()
+    get_sell_price(query => { qty => 1 })
+
+## get\_spot\_price
+
+    get_spot_price()
+    get_spot_price(query => { currency  => 'CAD' })
 
 # AUTHOR
 
