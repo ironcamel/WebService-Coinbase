@@ -110,6 +110,18 @@ method get_spot_price(Maybe[HashRef] :$query) {
     return $self->get("/prices/spot_rate", $query);
 }
 
+method get_orders { $self->get('/orders') }
+
+method create_order(HashRef $data) {
+    return $self->post('/orders', { button => $data });
+}
+
+method get_order($id) { $self->get("/orders/$id") }
+
+method refund_order($id, HashRef $data) {
+    return $self->post("/orders/$id", { order => $data });
+}
+
 # ABSTRACT: Coinbase (http://coinbase.com) API bindings
 
 =head1 SYNOPSIS
@@ -298,6 +310,42 @@ Cancel a money request.
 
     get_spot_price()
     get_spot_price(query => { currency  => 'CAD' })
+
+=head2 get_orders
+
+    get_orders()
+
+Returns a merchant's orders that they have received.
+
+=head2 create_order
+
+    create_order($data)
+
+Returns an order for a new button.
+
+Example:
+
+    $coin->create_order({
+        name               => 'test',
+        price_string       => '1.23',
+        price_currency_iso => 'BTC',
+    });
+
+=head2 get_order
+
+    get_order($order_id)
+
+Returns order details.
+
+=head2 refund_order
+
+    refund_order($order_id, $data)
+
+Refunds an order.
+
+Example:
+
+    $coin->refund_order($order_id, { refund_iso_code => 'BTC' })
 
 =cut
 

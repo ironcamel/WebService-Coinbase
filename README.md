@@ -4,7 +4,7 @@ WebService::Coinbase - Coinbase (http://coinbase.com) API bindings
 
 # VERSION
 
-version 0.0101
+version 0.0200
 
 # SYNOPSIS
 
@@ -192,6 +192,42 @@ Cancel a money request.
 
     get_spot_price()
     get_spot_price(query => { currency  => 'CAD' })
+
+## get\_orders
+
+    get_orders()
+
+Returns a merchant's orders that they have received.
+
+## create\_order
+
+    create_order($data)
+
+Returns an order for a new button.
+
+Example:
+
+    $coin->create_order({
+        name               => 'test',
+        price_string       => '1.23',
+        price_currency_iso => 'BTC',
+    });
+
+## get\_order
+
+    get_order($order_id)
+
+Returns order details.
+
+## refund\_order
+
+    refund_order($order_id, $data)
+
+Refunds an order.
+
+Example:
+
+    $coin->refund_order($order_id, { refund_iso_code => 'BTC' })
 
 # AUTHOR
 
