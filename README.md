@@ -229,6 +229,12 @@ Example:
 
     $coin->refund_order($order_id, { refund_iso_code => 'BTC' })
 
+## get\_authorization
+
+    get_authorization()
+
+Returns information about the current API authorization for the user.
+
 # AUTHOR
 
 Naveed Massjouni <naveed@vt.edu>

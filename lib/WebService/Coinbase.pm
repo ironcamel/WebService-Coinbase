@@ -122,6 +122,8 @@ method refund_order($id, HashRef $data) {
     return $self->post("/orders/$id", { order => $data });
 }
 
+method get_authorization { $self->get("/authorization") }
+
 # ABSTRACT: Coinbase (http://coinbase.com) API bindings
 
 =head1 SYNOPSIS
@@ -346,6 +348,12 @@ Refunds an order.
 Example:
 
     $coin->refund_order($order_id, { refund_iso_code => 'BTC' })
+
+=head2 get_authorization
+
+    get_authorization()
+
+Returns information about the current API authorization for the user.
 
 =cut
 
